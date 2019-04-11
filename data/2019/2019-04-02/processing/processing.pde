@@ -7,18 +7,32 @@
 // simple CSV read to spreadsheet
 Table data;
 int rowCnt = 0;
+int[] tail = new int[18];
 
 void setup() {
   size(200, 200);
-  frameRate(10);
+  frameRate(12);
   data = loadTable("data/bd.csv", "header");
+  for(int i = 0; i < tail.length; i++){
+    tail[i] = 180;
+  }
 }
 
 void draw() {
   background(255, 255, 255);
   TableRow row = data.getRow(rowCnt);
-  int cnt = row.getInt("bike_count");
-  ellipse(100, 20 + cnt, 10, 10);
+  int cnt = 180 - row.getInt("bike_count");
+  for(int i = (tail.length - 1) - 1; i > 0; i--){
+    tail[i] = tail[i-1];
+  }
+  tail[0] = cnt;
+  for(int i = 0; i < (tail.length - 1); i++){
+    stroke(0, map(i, 0, (tail.length - 1), 255, 0));
+    line(180 - (i * 10), tail[i], 180 - ((i + 1) * 10), tail[i + 1]);
+  }
+  fill(0);
+  stroke(0);
+  ellipse(180, cnt, 2, 2);
   rowCnt += 1;
 }
 
