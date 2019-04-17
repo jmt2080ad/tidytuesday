@@ -25,18 +25,21 @@ bd <- bd[!is.na(year),]
 bd <- bd[crossing != "MTS Trail",]
 bd <- bd[order(crossing, date, hour, direction),]
 
+bd <- bd[year == 2016]
+bd <- bd[crossing %in% bd[, .(max = max(bike_count), min(bike_count)), by = crossing][max > 45]$crossing]
+
 bd[,cid:=as.numeric(as.factor(crossing))]
-bd[,direction:=tolower(substring(direction, 1, 1))]
+bd[,did:=paste0("d", as.numeric(as.factor(direction)) %% 2 + 1)]
 
 ## export data
-exportFun <- function(nm, dir){
+exportFun <- function(nm, di){
     invisible({
-        dat <- bd[cid == nm & direction == dir,]$bike_count
-        con <- file(paste0("./data/c", nm, "_", dir, ".sc"), open = "w")
-        writeLines(paste0("~c", nm, dir, "=[", paste(dat, collapse = ","), "].asCollection;"), con)
+        dat <- bd[cid == nm & did == di,]$bike_count
+        con <- file(paste0("./data/c", nm, di, ".sc"), open = "w")
+        writeLines(paste0("~c", nm, di, "=[", paste(dat, collapse = ","), "].asCollection;"), con)
         close(con)
     })
 }
 
-expTab <- unique(bd[,.(cid, direction)])
+expTab <- unique(bd[,.(cid, did)])
 invisible({mapply(exportFun, expTab[[1]], expTab[[2]])})
