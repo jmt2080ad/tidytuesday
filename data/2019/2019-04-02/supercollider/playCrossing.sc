@@ -12,56 +12,57 @@
 s.reboot;
 
 ~dir = PathName.new("./data");
-
 ~cd = ~dir.files.collect({
 	arg file;
 	file.fullPath.loadRelative();
 });
 
 ~rate = (1/24);
-~freq = 60.midicps;
-~cs = ~cd.collect({
+~freq = 40.midicps;
+~cd.do({
 	arg itm, idx;
-	if((idx % 2 == 0) && (idx != 0),{~freq = ~freq + 24.midicps});
-	// ~freq.postln;
-	// ((idx % 2 == 0) && (idx != 0)).postln;
+	if((idx % 2 == 0) && (idx != 0),{~freq = ~freq + 36.midicps});
 	SynthDef('c' ++ idx ++ 'sd', {
-		arg amp, rate;
+		arg amp, t_ampGate, rate;
 		var env, sig;
 		amp = amp.linlin(0, 400, 0, 1);
-		env = EnvGen.ar(Env.new([0, 1, 0], [~rate, ~rate]), doneAction:2);
-		sig = FSinOsc.ar(~freq) * amp * env;		
+		env = EnvGen.ar(Env.new([0, amp], [~rate]), t_ampGate);
+		sig = SinOsc.ar(~freq) * amp * env;		
 		Out.ar((idx % 2), sig);
 	}).add;
 });
 
 (
+~cs = ~cd.collect({
+	arg itm, idx;
+	Synth.new('c' ++ idx ++ 'sd',
+		[
+			\amp, 0,
+			\t_ampGate, 0
+		]
+	);
+});
 SynthDef('chime', {
 	var env, sig;
-	env = EnvGen.ar(Env.perc(0.1, 0.1), doneAction:2);
-	sig = SinOsc.ar(300) * env * 0.2;
+	env = EnvGen.ar(Env.perc(0.05, 0.05), doneAction:2);
+	sig = SinOsc.ar(100) * env * 0.2;
 	Out.ar(0, [sig, sig]);
 }).add;
 )
 
 (
 Routine {
-	6000.do({
+	~cd[0][0].size.do({
 		arg itm1, idx1;
-		~cd.do({
+		~cs.do({
 			arg itm2, idx2;
-			Synth.new('c' ++ idx2 ++ 'sd',
-				[
-					\amp, ~cd[idx2][0][idx1],
-				]
-			);
+			itm2.set(\amp, ~cd[idx2][0][idx1], \t_ampGate, 1);
 		});
 		if((idx1 % 12) == 0,{ Synth.new('chime') });
 		~rate.wait;
 	});
 }.play;
 )
-
 
 s.plotTree;
 s.scope;
