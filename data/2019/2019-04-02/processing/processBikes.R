@@ -4,7 +4,7 @@ library(data.table)
 bd <- fread("../data/bike_traffic.csv")
 
 ## add fields
-bd[,`:=`(date = as.Date(sapply(strsplit(date, " "), "[", 1), format = "%d/%m/%Y"),
+bd[,`:=`(date = as.Date(sapply(strsplit(date, " "), "[", 1), format = "%m/%d/%Y"),
          hour = as.numeric(gsub(":.*$", "", sapply(strsplit(date, " "), "[", 2))),
          perd = sapply(strsplit(date, " "), "[", 3)
          )
