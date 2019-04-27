@@ -27,6 +27,8 @@ bd <- bd[order(crossing, date, hour, direction),]
 bd[,cid:=paste0("c", as.numeric(as.factor(crossing)))]
 bd[,did:=paste0("d", as.numeric(as.factor(direction)) %% 2 + 1)]
 
+bd <- bd[year == 2016,]
+
 bd <- dcast(bd,
             cid+date+year+month+day+hour~did,
             value.var="bike_count",
