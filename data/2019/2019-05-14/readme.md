@@ -22,42 +22,42 @@ nobel_winner_all_pubs <- readr::read_csv("https://raw.githubusercontent.com/rfor
 
 ### `nobel_winners.csv`
 
-| variable             | class     | description                          |
-|:---------------------|:----------|:-------------------------------------|
-| prize_year           | double    | Year that Nobel Prize was awarded    |
-| category             | character | Field of study/category              |
-| prize                | character | Prize Name                           |
-| motivation           | character | Motivation of the award              |
-| prize_share          | character | Share eg 1 of 1, 1 of 2, 1 of 4, etc |
-| laureate_id          | double    | ID assigned to each winner           |
-| laureate_type        | character | Individual or organization           |
-| full_name            | character | name of the winner                   |
-| birth_date           | double    | birth date of winner                 |
-| birth_city           | character | birth city/state of winner           |
-| birth_country        | character | birth country of winner              |
-| gender               | character | binary gender of the winner          |
-| organization_name    | character | organization name                    |
-| organization_city    | character | organization city                    |
-| organization_country | character | organization country                 |
-| death_date           | double    | death date of the winner (if dead)   |
-| death_city           | character | death city (if dead)                 |
-| death_country        | character | death country (if dead)              |
+|variable             |class     |description |
+|:---|:---|:-----------|
+|prize_year           |double    | Year that Nobel Prize was awarded|
+|category             |character | Field of study/category|
+|prize                |character | Prize Name |
+|motivation           |character | Motivation of the award |
+|prize_share          |character | Share eg 1 of 1, 1 of 2, 1 of 4, etc |
+|laureate_id          |double    | ID assigned to each winner |
+|laureate_type        |character | Individual or organization  |
+|full_name            |character | name of the winner|
+|birth_date           |double    | birth date of winner |
+|birth_city           |character | birth city/state of winner |
+|birth_country        |character | birth country of winner |
+|gender               |character | binary gender of the winner |
+|organization_name    |character | organization name |
+|organization_city    |character | organization city |
+|organization_country |character | organization country |
+|death_date           |double    | death date of the winner (if dead) |
+|death_city           |character | death city (if dead) |
+|death_country        |character | death country (if dead) |
 
 ### `nobel_winner_all_pubs.csv`
 
-| variable               | class     | description                                          |
-|:-----------------------|:----------|:-----------------------------------------------------|
-| laureate_id            | double    | Assigned Laureate ID (doesn't match other dataset)   |
-| laureate_name          | character | Abbreviated name                                     |
-| prize_year             | double    | Prize year                                           |
-| title                  | character | Title of paper                                       |
-| pub_year               | double    | Publication year                                     |
-| paper_id               | double    | Paper ID                                             |
-| doi                    | character | DOI of paper                                         |
-| journal                | character | Journal paper published in                           |
-| affiliation            | character | Affiliation of the author                            |
-| is_prize_winning_paper | character | Is associated as the Nobel winning paper (yes or no) |
-| category               | character | Category/field of study                              |
+|variable               |class     |description |
+|:----------------------|:---------|:-----------|
+|laureate_id            |double    | Assigned Laureate ID (doesn't match other dataset) |
+|laureate_name          |character | Abbreviated name |
+|prize_year             |double    | Prize year |
+|title                  |character | Title of paper |
+|pub_year               |double    | Publication year |
+|paper_id               |double    | Paper ID|
+|doi                    |character | DOI of paper|
+|journal                |character | Journal paper published in |
+|affiliation            |character | Affiliation of the author |
+|is_prize_winning_paper |character | Is associated as the Nobel winning paper (yes or no)|
+|category               |character | Category/field of study |
 
 # Cleaning script
 
