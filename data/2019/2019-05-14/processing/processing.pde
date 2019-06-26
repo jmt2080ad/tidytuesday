@@ -4,7 +4,6 @@ int[] margins;
 void setup() {
   size(600, 600);
   background(#000000);
-  margins = [20, 20, 50, 50]; // top, right, bottom, left
   dt = loadTable("./data/prizePapers.csv", "header");
 }
 
@@ -12,6 +11,11 @@ void draw(){
   float paper;
   float prize;
 
+  margins[0] = 20;
+  margins[1] = 20;
+  margins[2] = 50;
+  margins[3] = 50;
+  
   stroke(#000000);
   for (int idx = 0; idx < dt.lastRowIndex(); idx++) {
     prize = gridPoint(idx, "prize_year");
@@ -19,18 +23,18 @@ void draw(){
     ellipse(prize, paper, 5, 5);
   }
 
-  axis("x");
-  axis("y");
+  // axis("x");
+  // axis("y");
   
 }
 
-class Plot {
-  Table dt;
-  int[] margins;
+// class Plot {
+//   Table dt;
+//   int[] margins;
 
-  // constrictor 
-       plot()
-}
+//   // constrictor 
+//   plot();
+// }
 
 float gridPoint(int idx, String var){
   return ( ( dt.getFloat(idx, var) - 1826 ) / ( 2016 - 1826 ) * ( width - 20 ) );
